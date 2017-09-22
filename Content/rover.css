@@ -1,0 +1,10 @@
+﻿body {
+}
+
+td {
+    width: 94px;
+    height: 94px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+}
