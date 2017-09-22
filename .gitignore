@@ -46,3 +46,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 challenge.txt
+obj/Debug/MarsRoverCodingChallenge.csproj.FileListAbsolute.txt
+*.targets
+bin/roslyn/VBCSCompiler.exe.config
+bin/MarsRoverCodingChallenge.dll.config
