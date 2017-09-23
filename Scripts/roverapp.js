@@ -7,12 +7,17 @@
             "W": "rover-west",
             "S": "rover-south",
         }
+        var eraseRoverOnScreen = function () {
+            $("td").removeClass(function (index, className) {
+                return (className.match(/(^|\s)rover-\S+/g) || []).join(' ');
+            });
+        };
         var showRoverInLocation = function (location, orientation) {
-            //$(td[])
+            eraseRoverOnScreen();
             $("#" + location).addClass(orientationStyleMap[orientation]);
         };
         var displayMessage = function (message) {
-            $displayMessageElement.val(message);
+            $displayMessageElement.html(message);
         };
         return {
             displayMessage: displayMessage,
@@ -23,6 +28,7 @@
 
     })();
     var model = (function () {
+        var gridSize = 6;
         var currentLocation = "";
         var currentOrientation = "";
         var placeRoverInLocation = function (location, orientation) {
@@ -38,12 +44,24 @@
         };
     })();
     var parseRoverInstructions = function (roverInputText) {
-
+        var validCommands = ["L", "R", "B", "F"];
+        var formattedText = roverInputText.trim().toUpperCase();
+        if (formattedText === null || formattedText === "") {
+            return null;
+        } else {
+            var roverInstructionArray = formattedText.split(",");
+            var currentLetter = "";
+            for (var i = 0; i < roverInstructionArray.length; i++) {
+                currentLetter = roverInstructionArray[i];
+                if (validCommands.indexOf(currentLetter) === -1) { return null;}
+            }
+            return roverInstructionArray;
+        }
     };
     var moveRoverWithInstructions = function (roverInstructions) { };
     var placeRoverInStartingPosition = function (location, orientation) {
         model.placeRoverInLocation(location, orientation);
-        view.showRoverInLocation(location, orientation);
+        view.showRoverInLocation(model.getCurrentLocation(), model.getCurrentOrientation());
 
     };
     var processRoverInput = function (roverInputText) {
@@ -57,15 +75,14 @@
     };
     var setUpCommandForm = function () {
         $("#moveButton").on("click.move", function (e) {
+            view.displayMessage("");
             var moveInstructionText = $("#roverInput").val();
             processRoverInput(moveInstructionText);
-            
-            
         });
     };
     var startPage = function () {
-        var startingLocation = "01";
-        var startingOrientation = "E";
+        var startingLocation = "00";
+        var startingOrientation = "N";
         placeRoverInStartingPosition(startingLocation, startingOrientation);
         setUpCommandForm();
     };
