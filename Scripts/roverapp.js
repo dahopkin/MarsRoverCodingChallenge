@@ -7,6 +7,8 @@
             "W": "rover-west",
             "S": "rover-south",
         }
+        var addClassToLocation = function (className, location) { $("#" + location).addClass(className); };
+        var obstructionClass = "obstruction";
         var eraseRoverOnScreen = function () {
             $("td").removeClass(function (index, className) {
                 return (className.match(/(^|\s)rover-\S+/g) || []).join(' ');
@@ -14,14 +16,24 @@
         };
         var showRoverInLocation = function (location, orientation) {
             eraseRoverOnScreen();
-            $("#" + location).addClass(orientationStyleMap[orientation]);
+            //$("#" + location).addClass(orientationStyleMap[orientation]);
+            addClassToLocation(orientationStyleMap[orientation], location);
         };
         var displayMessage = function (message) {
             $displayMessageElement.html(message);
         };
+        var displayObstructions = function (obstructionLocations) {
+            var currentObstructionLocation;
+            for (var i = 0; i < obstructionLocations.length; i++) {
+                currentObstructionLocation = obstructionLocations[i];
+                addClassToLocation(obstructionClass, currentObstructionLocation);
+            }
+        };
         return {
             displayMessage: displayMessage,
-            showRoverInLocation: showRoverInLocation
+            showRoverInLocation: showRoverInLocation,
+            displayObstructions: displayObstructions
+
         };
     })();
     var controller = (function () {
@@ -45,6 +57,7 @@
         var gridSize = 7;
         var currentLocation = "";
         var currentOrientation = "";
+        var obstructionLocations = ["06"];
         var placeRoverInLocation = function (location, orientation) {
             currentLocation = location;
             currentOrientation = orientation;
@@ -106,7 +119,7 @@
             return newOrientation;
         };
         var locationHasObstruction = function (location) {
-            return false;
+            return obstructionLocations.indexOf(location) > -1;
         };
         var roverCanMove = function (instruction) {
             if (instructionIsRotation(instruction)) return true;
@@ -119,12 +132,14 @@
         };
         var getCurrentLocation = function () { return currentLocation; };
         var getCurrentOrientation = function () { return currentOrientation; };
+        var getGridObstructionLocations = function(){ return obstructionLocations; }
         return {
             placeRoverInLocation: placeRoverInLocation,
             getCurrentLocation: getCurrentLocation,
             getCurrentOrientation: getCurrentOrientation,
             roverCanMove: roverCanMove,
-            moveRoverByInstruction: setNewLocationOrOrientationFromInstruction
+            moveRoverByInstruction: setNewLocationOrOrientationFromInstruction,
+            getGridObstructionLocations : getGridObstructionLocations
         };
     })();
     
@@ -180,6 +195,7 @@
         var startingLocation = "00";
         var startingOrientation = "N";
         placeRoverInStartingPosition(startingLocation, startingOrientation);
+        view.displayObstructions(model.getGridObstructionLocations());
         stopFormSubmission();
         setUpCommandForm();
     };
