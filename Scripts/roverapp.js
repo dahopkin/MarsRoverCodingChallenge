@@ -39,6 +39,24 @@
     var controller = (function () {
         var moveRoverWithInstructions = function (roverInstructions) {
             var currentInstruction = "";
+            var errorMessageNotDisplayed = true;
+            for (var i = 0; i < roverInstructions.length; i++) {
+                (function (i) {
+                    setTimeout(function () {
+                        currentInstruction = roverInstructions[i];
+                        if (model.roverCanMove(currentInstruction) && errorMessageNotDisplayed === true) {
+                            model.moveRoverByInstruction(currentInstruction);
+                            view.showRoverInLocation(model.getCurrentLocation(), model.getCurrentOrientation());
+                        } else {
+                            if (errorMessageNotDisplayed === true) { view.displayMessage("Rover cannot move past obstruction."); }
+                            errorMessageNotDisplayed = false;
+                        }
+                    }, 1000 * i);
+                }(i));
+            }
+        };
+        var moveRoverWithInstructions_old = function (roverInstructions) {
+            var currentInstruction = "";
             for (var i = 0; i < roverInstructions.length; i++) {
                 currentInstruction = roverInstructions[i];
                 if (model.roverCanMove(currentInstruction)) {
