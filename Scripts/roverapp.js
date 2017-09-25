@@ -158,11 +158,21 @@
             }
 
     };
+    var stopFormSubmission = function () {
+        $("form").submit(function (e) {
+            e.preventDefault();
+        });
+    };
     var setUpCommandForm = function () {
         $("#moveButton").on("click.move", function (e) {
             view.displayMessage("");
             var moveInstructionText = $("#roverInput").val();
             processRoverInput(moveInstructionText);
+        });
+        $(document).on("keydown.move", function (e) {
+            if (e.keyCode === 13) {
+                $("#moveButton").trigger("click.move");
+            }
         });
 
     };
@@ -170,6 +180,7 @@
         var startingLocation = "00";
         var startingOrientation = "N";
         placeRoverInStartingPosition(startingLocation, startingOrientation);
+        stopFormSubmission();
         setUpCommandForm();
     };
     startPage();
