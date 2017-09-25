@@ -55,22 +55,22 @@
         var getNewLocationFromInstruction = function (instruction) {
             var currentLocationRow = currentLocation.charAt(0);
             var currentLocationColumn = currentLocation.charAt(1);
-            var oneColumnRightWithWrap = (negativeMod(Number(currentLocationColumn) + 1, gridSize));
-            var oneColumnLeftWithWrap = (negativeMod(Number(currentLocationColumn) - 1, gridSize));
-            var oneRowUpWithWrap = (negativeMod(Number(currentLocationRow) - 1, gridSize));
-            var oneRowDownWithWrap = (negativeMod(Number(currentLocationRow) + 1, gridSize));
+            var oneColumnRightWithWrap = negativeMod(Number(currentLocationColumn) + 1, gridSize);
+            var oneColumnLeftWithWrap = negativeMod(Number(currentLocationColumn) - 1, gridSize);
+            var oneRowUpWithWrap = negativeMod(Number(currentLocationRow) - 1, gridSize);
+            var oneRowDownWithWrap = negativeMod(Number(currentLocationRow) + 1, gridSize);
             switch (instruction) {
                 case "B":
-                    if (currentOrientation === "N") { currentLocationRow = (negativeMod(Number(currentLocationRow) + 1, gridSize)).toString(); }
-                    else if (currentOrientation === "E") { currentLocationColumn = (negativeMod(Number(currentLocationColumn) - 1, gridSize)).toString(); }
-                    else if (currentOrientation === "S") { currentLocationRow = (negativeMod(Number(currentLocationRow) - 1, gridSize)).toString(); }
-                    else if (currentOrientation === "W") { currentLocationColumn = (negativeMod(Number(currentLocationColumn) + 1, gridsize)).toString(); }
+                    if (currentOrientation === "N") { currentLocationRow = oneRowDownWithWrap.toString(); }
+                    else if (currentOrientation === "E") { currentLocationColumn = oneColumnLeftWithWrap.toString(); }
+                    else if (currentOrientation === "S") { currentLocationRow = oneRowUpWithWrap.toString(); }
+                    else if (currentOrientation === "W") { currentLocationColumn = oneColumnRightWithWrap.toString(); }
                     break;
                 case "F":
-                    if (currentOrientation === "N") { currentLocationRow = (negativeMod(Number(currentLocationRow) - 1, gridSize)).toString(); }
-                    else if (currentOrientation === "E") { currentLocationColumn = (negativeMod(Number(currentLocationColumn + 1), gridSize)).toString(); }
-                    else if (currentOrientation === "S") { currentLocationRow = (negativeMod(Number(currentLocationRow) + 1, gridSize)).toString(); }
-                    else if (currentOrientation === "W") { currentLocationColumn = (negativeMod(Number(currentLocationColumn) - 1, gridSize)).toString(); }
+                    if (currentOrientation === "N") { currentLocationRow = oneRowUpWithWrap.toString(); }
+                    else if (currentOrientation === "E") { currentLocationColumn = oneColumnRightWithWrap.toString(); }
+                    else if (currentOrientation === "S") { currentLocationRow = oneRowDownWithWrap.toString(); }
+                    else if (currentOrientation === "W") { currentLocationColumn = oneColumnLeftWithWrap.toString(); }
                     break;
                 default:
                     return currentLocation;
