@@ -26,7 +26,6 @@
     })();
     var controller = (function () {
         var moveRoverWithInstructions = function (roverInstructions) {
-
             var currentInstruction = "";
             for (var i = 0; i < roverInstructions.length; i++) {
                 currentInstruction = roverInstructions[i];
@@ -39,6 +38,7 @@
                 }
             }
         };
+
         return { moveRoverWithInstructions: moveRoverWithInstructions };
     })();
     var model = (function () {
@@ -51,14 +51,18 @@
         };
         var instructionIsRotation = function (instruction) { return instruction === "R" || instruction === "L"; }
         var instructionIsMovement = function (instruction) { return instruction === "B" || instruction === "F"; }
-        var negativeMod = function (num1, num2) { return ((num1 % num2) + num2) % num2; };
+        var wrap = function (step, maximumSize) {
+            if (step < 0) { return maximumSize - 1; }
+            if (step > maximumSize) { return 0; }
+            return step;
+        };
         var getNewLocationFromInstruction = function (instruction) {
             var currentLocationRow = currentLocation.charAt(0);
             var currentLocationColumn = currentLocation.charAt(1);
-            var oneColumnRightWithWrap = negativeMod(Number(currentLocationColumn) + 1, gridSize);
-            var oneColumnLeftWithWrap = negativeMod(Number(currentLocationColumn) - 1, gridSize);
-            var oneRowUpWithWrap = negativeMod(Number(currentLocationRow) - 1, gridSize);
-            var oneRowDownWithWrap = negativeMod(Number(currentLocationRow) + 1, gridSize);
+            var oneColumnRightWithWrap = wrap(Number(currentLocationColumn) + 1, gridSize);
+            var oneColumnLeftWithWrap = wrap(Number(currentLocationColumn) - 1, gridSize);
+            var oneRowUpWithWrap = wrap(Number(currentLocationRow) - 1, gridSize);
+            var oneRowDownWithWrap = wrap(Number(currentLocationRow) + 1, gridSize);
             switch (instruction) {
                 case "B":
                     if (currentOrientation === "N") { currentLocationRow = oneRowDownWithWrap.toString(); }
@@ -83,14 +87,16 @@
             var clockwiseOrientations = ["N", "E", "S", "W"];
             var clockwiseOrientationsLength = clockwiseOrientations.length;
             var currentOrientationIndexInClockwise = clockwiseOrientations.indexOf(currentOrientation);
+            var rotateLeft = wrap(currentOrientationIndexInClockwise - 1, clockwiseOrientationsLength)
+            var rotateRight = wrap(currentOrientationIndexInClockwise + 1, clockwiseOrientationsLength)
             var newOrientation;
             switch (instruction) {
                 case "L":
-                    var newOrientationIndex = (currentOrientationIndexInClockwise - 1) % clockwiseOrientationsLength
+                    var newOrientationIndex = rotateLeft;
                     newOrientation = clockwiseOrientations[newOrientationIndex];
                     break;
                 case "R":
-                    var newOrientationIndex = (currentOrientationIndexInClockwise + 1) % clockwiseOrientationsLength
+                    var newOrientationIndex = rotateRight;
                     newOrientation = clockwiseOrientations[newOrientationIndex];
                     break;
                 default:
@@ -110,37 +116,6 @@
         var setNewLocationOrOrientationFromInstruction = function (instruction) {
             if (instructionIsRotation(instruction)) { currentOrientation = getNewOrientationFromInstruction(instruction); }
             else if (instructionIsMovement(instruction)) { currentLocation = getNewLocationFromInstruction(instruction); }
-            //var clockwiseOrientations = ["N", "E", "S", "W"];
-            //var clockwiseOrientationsLength = clockwiseOrientations.length;
-            //var currentLocationX = currentLocation.charAt(0);
-            //var currentLocationY = currentLocation.charAt(1);
-            //var currentOrientationIndexInClockwise = clockwiseOrientations.indexOf(currentOrientation);
-            //switch (instruction) {
-            //    case "L":
-            //        var newOrientationIndex = (currentOrientationIndexInClockwise - 1) % clockwiseOrientationsLength
-            //        currentOrientation = clockwiseOrientations[newOrientationIndex];
-            //        break;
-            //    case "R":
-            //        var newOrientationIndex = (currentOrientationIndexInClockwise + 1) % clockwiseOrientationsLength
-            //        currentOrientation = clockwiseOrientations[newOrientationIndex];
-            //        break;
-            //    case "B":
-            //        if (currentOrientation === "N") { currentLocationY = ((Number(currentLocationY) - 1) % gridSize).toString(); }
-            //        else if (currentOrientation === "E") { currentLocationX = ((Number(currentLocationX) - 1) % gridSize).toString(); }
-            //        else if (currentOrientation === "S") { currentLocationY = ((Number(currentLocationY) + 1) % gridSize).toString(); }
-            //        else if (currentOrientation === "W") { currentLocationX = ((Number(currentLocationX) + 1) % gridSize).toString(); }
-            //        break;
-            //    case "F":
-            //        if (currentOrientation === "N") { currentLocationY = ((Number(currentLocationY) + 1) % gridSize).toString(); }
-            //        else if (currentOrientation === "E") { currentLocationX = ((Number(currentLocationX) + 1) % gridSize).toString(); }
-            //        else if (currentOrientation === "S") { currentLocationY = ((Number(currentLocationY) - 1) % gridSize).toString(); }
-            //        else if (currentOrientation === "W") { currentLocationX = ((Number(currentLocationX) - 1) % gridSize).toString(); }
-            //        break;
-            //    default:
-            //        break;
-
-            //}
-            //currentLocation = currentLocationX + currentLocationY;
         };
         var getCurrentLocation = function () { return currentLocation; };
         var getCurrentOrientation = function () { return currentOrientation; };
@@ -162,7 +137,7 @@
             var roverInstructionArray = formattedText.split(",");
             var currentLetter = "";
             for (var i = 0; i < roverInstructionArray.length; i++) {
-                currentLetter = roverInstructionArray[i];
+                currentLetter = roverInstructionArray[i].trim();
                 if (validCommands.indexOf(currentLetter) === -1) { return null;}
             }
             return roverInstructionArray;
@@ -189,6 +164,7 @@
             var moveInstructionText = $("#roverInput").val();
             processRoverInput(moveInstructionText);
         });
+
     };
     var startPage = function () {
         var startingLocation = "00";
