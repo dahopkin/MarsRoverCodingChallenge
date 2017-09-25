@@ -51,9 +51,9 @@
         };
         var instructionIsRotation = function (instruction) { return instruction === "R" || instruction === "L"; }
         var instructionIsMovement = function (instruction) { return instruction === "B" || instruction === "F"; }
-        var wrap = function (step, maximumSize) {
-            if (step < 0) { return maximumSize - 1; }
-            if (step > maximumSize) { return 0; }
+        var wrap = function (step, wrapSize) {
+            if (step < 0) { return wrapSize - 1; }
+            if (step >= wrapSize) { return 0; }
             return step;
         };
         var getNewLocationFromInstruction = function (instruction) {
