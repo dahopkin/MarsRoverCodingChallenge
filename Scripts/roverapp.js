@@ -45,13 +45,23 @@
                     model.moveRoverByInstruction(currentInstruction);
                     view.showRoverInLocation(model.getCurrentLocation(), model.getCurrentOrientation());
                 } else {
-                    view.displayMessage("Model cannot move past obstruction.")
+                    view.displayMessage("Rover cannot move past obstruction.")
                     break;
                 }
             }
         };
-
-        return { moveRoverWithInstructions: moveRoverWithInstructions };
+        var placeRoverInLocation = function (location, orientation) {
+            if (model.locationHasObstruction(location)) {
+                view.displayMessage("Rover cannot be transported to a location with an obstruction.")
+            } else {
+                model.placeRoverInLocation(location, orientation);
+                view.showRoverInLocation(model.getCurrentLocation(), model.getCurrentOrientation());
+            }
+        };
+        return {
+            moveRoverWithInstructions: moveRoverWithInstructions,
+            placeRoverInLocation: placeRoverInLocation
+        };
     })();
     var model = (function () {
         var gridSize = 7;
@@ -139,7 +149,8 @@
             getCurrentOrientation: getCurrentOrientation,
             roverCanMove: roverCanMove,
             moveRoverByInstruction: setNewLocationOrOrientationFromInstruction,
-            getGridObstructionLocations : getGridObstructionLocations
+            getGridObstructionLocations: getGridObstructionLocations,
+            locationHasObstruction : locationHasObstruction
         };
     })();
     
@@ -162,7 +173,6 @@
     var placeRoverInStartingPosition = function (location, orientation) {
         model.placeRoverInLocation(location, orientation);
         view.showRoverInLocation(model.getCurrentLocation(), model.getCurrentOrientation());
-
     };
     var processRoverInput = function (roverInputText) {
         var roverInstructions = parseRoverInstructions(roverInputText);
@@ -191,13 +201,23 @@
         });
 
     };
+    var setUpLocationForm = function () {
+        $("#transportButton").on("click.transport", function (e) {
+            var row = $("#roverLocationRow").val().toString();
+            var column = $("#roverLocationColumn").val().toString();
+            var newOrientation = $("#roverOrientation").val().toString();
+            var newLocation = row + column;
+            controller.placeRoverInLocation(newLocation, newOrientation);
+        });
+    };
     var startPage = function () {
         var startingLocation = "00";
         var startingOrientation = "N";
-        placeRoverInStartingPosition(startingLocation, startingOrientation);
+        controller.placeRoverInLocation(startingLocation, startingOrientation);
         view.displayObstructions(model.getGridObstructionLocations());
         stopFormSubmission();
         setUpCommandForm();
+        setUpLocationForm();
     };
     startPage();
 });

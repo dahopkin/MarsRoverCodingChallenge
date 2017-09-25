@@ -80,6 +80,35 @@
         <div>Type "l" or "r" to rotate the robot left or right, and "b" or "f" to move the robot back or forward. Commands can be chained together, such as "l,b,f".</div>
         <div id="messageArea"></div>
     </form>
+    <form>
+        <div>You can also just select a location where you want the rover to be, and just transport the rover there. Like Star Trek, just FAR less exciting.</div>
+        <select id="roverLocationRow">
+            <option value="0">1</option>
+            <option value="1">2</option>
+            <option value="2">3</option>
+            <option value="3">4</option>
+            <option value="4">5</option>
+            <option value="5">6</option>
+            <option value="6">7</option>
+        </select>
+        <select id="roverLocationColumn">
+            <option value="0">1</option>
+            <option value="1">2</option>
+            <option value="2">3</option>
+            <option value="3">4</option>
+            <option value="4">5</option>
+            <option value="5">6</option>
+            <option value="6">7</option>
+        </select>
+        <select id="roverOrientation">
+            <option value="N">North</option>
+            <option value="E">East</option>
+            <option value="W">West</option>
+            <option value="S">South</option>
+        </select>
+        <input type="button" id="transportButton" value="Transport The Rover">
+        <div id="messageArea"></div>
+    </form>
     <script src="Scripts/roverapp.js"></script>
 </body>
 </html>
