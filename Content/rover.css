@@ -16,7 +16,6 @@ td {
     background: url("Images/Space-Invaders-North.png") no-repeat center center;
 }
 
-
 .rover-east {
     background: url("Images/Space-Invaders-East.png") no-repeat center;
 }
@@ -31,4 +30,8 @@ td {
 
 .obstruction {
     background-color: black;
+    border-radius: 50%;
 }
+
+p#messageArea { padding:15px; }
+form{margin-bottom: 15px;}
