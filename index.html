@@ -11,21 +11,24 @@
 </head>
 <body>
     <div class="container-fluid">
-        <h1 class="text-center">Mars Rover</h1>
+        <h1 class="text-center text-primary">Mars Rover</h1>
         <div class="row">
             <div class="col-xs-12 col-lg-6">
                 <form class="form-inline">
-                    <h3>Move the Rover</h3>
-                    <div>Type "l" or "r" to rotate the robot left or right, and "b" or "f" to move the robot back or forward. Commands are case-insensitve, and can be chained together, such as "l,b,f".</div>
+                    <h3 class="text-primary">Move the Rover</h3>
+                    <p>Type "l" or "r" to rotate the robot left or right, and "b" or "f" to move the robot back or forward. Commands are case-insensitve, and can be chained together, such as "l,b,f".</p>
                     <div class="form-group">
                         <label for="roverInput">Enter Commands: </label>
                         <input type="text" id="roverInput" class="form-control" placeholder="">
+                       
                     </div>
-                    <input type="button" id="moveButton" class="btn btn-default" value="Move The Rover">
+                    <input type="button" id="moveButton" class="btn btn-primary" value="Move The Rover">
+                    <p class="help-block">Note: commands will execute with a one-second delay.</p>
+                    <p class="text-primary" id="locationMessageArea"></p>
                 </form>
                 <form class="form-inline">
-                    <h3>Transport the Rover</h3>
-                    <div>You can also just select a location where you want the rover to be, and which way you want it to be pointed. We'll transport the rover there. Like Star Trek, just FAR less exciting.</div>
+                    <h3 class="text-primary">Transport the Rover</h3>
+                    <p>You can also just select a location where you want the rover to be, and which way you want it to be pointed. We'll transport the rover there. Like Star Trek, just FAR less exciting.</p>
                     <div class="form-group">
                         <label for="roverLocationRow">Row: </label>
                         <select id="roverLocationRow" class="form-control">
@@ -59,9 +62,9 @@
                             <option value="S">South</option>
                         </select>
                     </div>
-                    <input type="button" id="transportButton" class="btn btn-default" value="Transport The Rover">
-                    <div id="messageArea"></div>
+                    <input type="button" id="transportButton" class="btn btn-primary" value="Transport The Rover">
                 </form>
+                <p class="text-danger" id="messageArea"></p>
             </div>
             <div class="col-xs-12 col-lg-6">
                 <table>
