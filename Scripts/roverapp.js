@@ -86,6 +86,7 @@
         var currentLocation = "";
         var currentOrientation = "";
         var obstructionLocations = ["06"];
+        var obstructionLocations = ["06", "34", "51"];
         var placeRoverInLocation = function (location, orientation) {
             currentLocation = location;
             currentOrientation = orientation;
@@ -161,6 +162,7 @@
         var getCurrentLocation = function () { return currentLocation; };
         var getCurrentOrientation = function () { return currentOrientation; };
         var getGridObstructionLocations = function(){ return obstructionLocations; }
+        var getGridObstructionLocations = function () { return obstructionLocations; }
         return {
             placeRoverInLocation: placeRoverInLocation,
             getCurrentLocation: getCurrentLocation,
