@@ -1,114 +1,126 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Mars Rover</title>
-	<meta charset="utf-8" />
-    <link rel="stylesheet" href="Content/bootstrap.min.css"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="Content/bootstrap.min.css" />
     <script src="Scripts/jquery-3.2.1.min.js"></script>
-    <link rel="stylesheet" href="Content/rover.css"/>
+    <link rel="stylesheet" href="Content/rover.css" />
     <script src="Scripts/bootstrap.min.js"></script>
 </head>
 <body>
-    <table>
-        <tr>
-            <td id="00"></td>
-            <td id="01"></td>
-            <td id="02"></td>
-            <td id="03"></td>
-            <td id="04"></td>
-            <td id="05"></td>
-            <td id="06"></td>
-        </tr>
-        <tr>
-            <td id="10"></td>
-            <td id="11"></td>
-            <td id="12"></td>
-            <td id="13"></td>
-            <td id="14"></td>
-            <td id="15"></td>
-            <td id="16"></td>
-        </tr>
-        <tr>
-            <td id="20"></td>
-            <td id="21"></td>
-            <td id="22"></td>
-            <td id="23"></td>
-            <td id="24"></td>
-            <td id="25"></td>
-            <td id="26"></td>
-        </tr>
-        <tr>
-            <td id="30"></td>
-            <td id="31"></td>
-            <td id="32"></td>
-            <td id="33"></td>
-            <td id="34"></td>
-            <td id="35"></td>
-            <td id="36"></td>
-        </tr>
-        <tr>
-            <td id="40"></td>
-            <td id="41"></td>
-            <td id="42"></td>
-            <td id="43"></td>
-            <td id="44"></td>
-            <td id="45"></td>
-            <td id="46"></td>
-        </tr>
-        <tr>
-            <td id="50"></td>
-            <td id="51"></td>
-            <td id="52"></td>
-            <td id="53"></td>
-            <td id="54"></td>
-            <td id="55"></td>
-            <td id="56"></td>
-        </tr>
-        <tr>
-            <td id="60"></td>
-            <td id="61"></td>
-            <td id="62"></td>
-            <td id="63"></td>
-            <td id="64"></td>
-            <td id="65"></td>
-            <td id="66"></td>
-        </tr>
-    </table>
-    <form>
-        <input type="text" id="roverInput" placeholder="">
-        <input type="button" id="moveButton" value="Move The Rover">
-        <div>Type "l" or "r" to rotate the robot left or right, and "b" or "f" to move the robot back or forward. Commands can be chained together, such as "l,b,f".</div>
-        <div id="messageArea"></div>
-    </form>
-    <form>
-        <div>You can also just select a location where you want the rover to be, and just transport the rover there. Like Star Trek, just FAR less exciting.</div>
-        <select id="roverLocationRow">
-            <option value="0">1</option>
-            <option value="1">2</option>
-            <option value="2">3</option>
-            <option value="3">4</option>
-            <option value="4">5</option>
-            <option value="5">6</option>
-            <option value="6">7</option>
-        </select>
-        <select id="roverLocationColumn">
-            <option value="0">1</option>
-            <option value="1">2</option>
-            <option value="2">3</option>
-            <option value="3">4</option>
-            <option value="4">5</option>
-            <option value="5">6</option>
-            <option value="6">7</option>
-        </select>
-        <select id="roverOrientation">
-            <option value="N">North</option>
-            <option value="E">East</option>
-            <option value="W">West</option>
-            <option value="S">South</option>
-        </select>
-        <input type="button" id="transportButton" value="Transport The Rover">
-        <div id="messageArea"></div>
-    </form>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-lg-6">
+                <form>
+                    <input type="text" id="roverInput" placeholder="">
+                    <input type="button" id="moveButton" value="Move The Rover">
+                    <div>Type "l" or "r" to rotate the robot left or right, and "b" or "f" to move the robot back or forward. Commands can be chained together, such as "l,b,f".</div>
+                </form>
+                <form>
+                    <div>You can also just select a location where you want the rover to be, and just transport the rover there. Like Star Trek, just FAR less exciting.</div>
+                    <select id="roverLocationRow">
+                        <option value="0">1</option>
+                        <option value="1">2</option>
+                        <option value="2">3</option>
+                        <option value="3">4</option>
+                        <option value="4">5</option>
+                        <option value="5">6</option>
+                        <option value="6">7</option>
+                    </select>
+                    <select id="roverLocationColumn">
+                        <option value="0">1</option>
+                        <option value="1">2</option>
+                        <option value="2">3</option>
+                        <option value="3">4</option>
+                        <option value="4">5</option>
+                        <option value="5">6</option>
+                        <option value="6">7</option>
+                    </select>
+                    <select id="roverOrientation">
+                        <option value="N">North</option>
+                        <option value="E">East</option>
+                        <option value="W">West</option>
+                        <option value="S">South</option>
+                    </select>
+                    <input type="button" id="transportButton" value="Transport The Rover">
+                    <div id="messageArea"></div>
+                </form>
+            </div>
+            <div class="col-xs-12 col-lg-6">
+                <table>
+                    <tr>
+                        <td id="00"></td>
+                        <td id="01"></td>
+                        <td id="02"></td>
+                        <td id="03"></td>
+                        <td id="04"></td>
+                        <td id="05"></td>
+                        <td id="06"></td>
+                    </tr>
+                    <tr>
+                        <td id="10"></td>
+                        <td id="11"></td>
+                        <td id="12"></td>
+                        <td id="13"></td>
+                        <td id="14"></td>
+                        <td id="15"></td>
+                        <td id="16"></td>
+                    </tr>
+                    <tr>
+                        <td id="20"></td>
+                        <td id="21"></td>
+                        <td id="22"></td>
+                        <td id="23"></td>
+                        <td id="24"></td>
+                        <td id="25"></td>
+                        <td id="26"></td>
+                    </tr>
+                    <tr>
+                        <td id="30"></td>
+                        <td id="31"></td>
+                        <td id="32"></td>
+                        <td id="33"></td>
+                        <td id="34"></td>
+                        <td id="35"></td>
+                        <td id="36"></td>
+                    </tr>
+                    <tr>
+                        <td id="40"></td>
+                        <td id="41"></td>
+                        <td id="42"></td>
+                        <td id="43"></td>
+                        <td id="44"></td>
+                        <td id="45"></td>
+                        <td id="46"></td>
+                    </tr>
+                    <tr>
+                        <td id="50"></td>
+                        <td id="51"></td>
+                        <td id="52"></td>
+                        <td id="53"></td>
+                        <td id="54"></td>
+                        <td id="55"></td>
+                        <td id="56"></td>
+                    </tr>
+                    <tr>
+                        <td id="60"></td>
+                        <td id="61"></td>
+                        <td id="62"></td>
+                        <td id="63"></td>
+                        <td id="64"></td>
+                        <td id="65"></td>
+                        <td id="66"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row"></div>
+
+
+    </div>
+
     <script src="Scripts/roverapp.js"></script>
 </body>
 </html>
