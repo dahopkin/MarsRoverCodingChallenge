@@ -9,9 +9,15 @@ td {
     border-width: 1px;
 }
 
+
+
 .rover-north, .rover-east, .rover-south, .rover-west{
-    background: url("Images/Space-invaders.jpg") no-repeat center center;
-}
+    /*content:url("Images/Space-Invaders.png");*/
+    background: url("Images/Space-Invaders.png") no-repeat center center;
+    background-size:100%;
+}​
+    
+
 .rover-east{
     -ms-transform: rotate(90deg); /* IE 9 */
     -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
