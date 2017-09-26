@@ -1,11 +1,12 @@
 ﻿$(function () {
     var view = (function () {
         var $displayMessageElement = $("#messageArea");
-        var orientationStyleMap = {
-            "N": "rover-north",
-            "E": "rover-east",
-            "W": "rover-west",
-            "S": "rover-south",
+        var $displayLocationMessageElement = $("#locationMessageArea");
+        var orientationDataMap = {
+            "N": { "style": "rover-north", "direction": "north", "back": "down", "forward": "up", "left":"west","right":"east" },
+            "E": { "style": "rover-east", "direction": "east", "back": "left", "forward": "right", "left": "north", "right": "south" },
+            "W": { "style": "rover-west", "direction": "west", "back": "right", "forward": "left", "left": "south", "right": "north" },
+            "S": { "style": "rover-south", "direction": "south", "back": "up", "forward": "down", "left": "east", "right": "west" },
         }
         var addClassToLocation = function (className, location) { $("#" + location).addClass(className); };
         var obstructionClass = "obstruction";
@@ -17,10 +18,20 @@
         var showRoverInLocation = function (location, orientation) {
             eraseRoverOnScreen();
             //$("#" + location).addClass(orientationStyleMap[orientation]);
-            addClassToLocation(orientationStyleMap[orientation], location);
+            addClassToLocation(orientationDataMap[orientation]["style"], location);
         };
         var displayMessage = function (message) {
             $displayMessageElement.html(message);
+        };
+        var displayLocationMessage = function (orientation) {
+            var locationData = orientationDataMap[orientation];
+            var direction = locationData["direction"];
+            var backward = locationData["back"];
+            var forward = locationData["forward"];
+            var left = locationData["left"];
+            var right = locationData["right"];
+            var messageToDisplay = `The rover is pointing ${direction}. Rotating it left will have it pointing ${left}, and rotating it right will have it pointing ${right}. <br>Moving it forward will move it ${forward}, and moving it backward will move it ${backward}.`;
+            $displayLocationMessageElement.html(messageToDisplay);
         };
         var displayObstructions = function (obstructionLocations) {
             var currentObstructionLocation;
@@ -32,7 +43,8 @@
         return {
             displayMessage: displayMessage,
             showRoverInLocation: showRoverInLocation,
-            displayObstructions: displayObstructions
+            displayObstructions: displayObstructions,
+            displayLocationMessage: displayLocationMessage
 
         };
     })();
@@ -47,6 +59,7 @@
                         if (model.roverCanMove(currentInstruction) && errorMessageNotDisplayed === true) {
                             model.moveRoverByInstruction(currentInstruction);
                             view.showRoverInLocation(model.getCurrentLocation(), model.getCurrentOrientation());
+                            view.displayLocationMessage(model.getCurrentOrientation());
                         } else {
                             if (errorMessageNotDisplayed === true) { view.displayMessage("Rover cannot move past obstruction."); }
                             errorMessageNotDisplayed = false;
@@ -62,6 +75,7 @@
                 if (model.roverCanMove(currentInstruction)) {
                     model.moveRoverByInstruction(currentInstruction);
                     view.showRoverInLocation(model.getCurrentLocation(), model.getCurrentOrientation());
+                    view.displayLocationMessage(model.getCurrentOrientation());
                 } else {
                     view.displayMessage("Rover cannot move past obstruction.")
                     break;
@@ -74,6 +88,7 @@
             } else {
                 model.placeRoverInLocation(location, orientation);
                 view.showRoverInLocation(model.getCurrentLocation(), model.getCurrentOrientation());
+                view.displayLocationMessage(model.getCurrentOrientation());
             }
         };
         return {
@@ -85,7 +100,6 @@
         var gridSize = 7;
         var currentLocation = "";
         var currentOrientation = "";
-        var obstructionLocations = ["06"];
         var obstructionLocations = ["06", "34", "51"];
         var placeRoverInLocation = function (location, orientation) {
             currentLocation = location;
@@ -161,7 +175,6 @@
         };
         var getCurrentLocation = function () { return currentLocation; };
         var getCurrentOrientation = function () { return currentOrientation; };
-        var getGridObstructionLocations = function(){ return obstructionLocations; }
         var getGridObstructionLocations = function () { return obstructionLocations; }
         return {
             placeRoverInLocation: placeRoverInLocation,
@@ -170,10 +183,10 @@
             roverCanMove: roverCanMove,
             moveRoverByInstruction: setNewLocationOrOrientationFromInstruction,
             getGridObstructionLocations: getGridObstructionLocations,
-            locationHasObstruction : locationHasObstruction
+            locationHasObstruction: locationHasObstruction
         };
     })();
-    
+
     var parseRoverInstructions = function (roverInputText) {
         var validCommands = ["L", "R", "B", "F"];
         var formattedText = roverInputText.trim().toUpperCase();
@@ -184,12 +197,12 @@
             var currentLetter = "";
             for (var i = 0; i < roverInstructionArray.length; i++) {
                 currentLetter = roverInstructionArray[i].trim();
-                if (validCommands.indexOf(currentLetter) === -1) { return null;}
+                if (validCommands.indexOf(currentLetter) === -1) { return null; }
             }
             return roverInstructionArray;
         }
     };
-    
+
     var placeRoverInStartingPosition = function (location, orientation) {
         model.placeRoverInLocation(location, orientation);
         view.showRoverInLocation(model.getCurrentLocation(), model.getCurrentOrientation());
@@ -232,7 +245,6 @@
     };
     var startPage = function () {
         var startingLocation = "00";
-        var startingOrientation = "N";
         var startingOrientation = "E";
         controller.placeRoverInLocation(startingLocation, startingOrientation);
         view.displayObstructions(model.getGridObstructionLocations());
