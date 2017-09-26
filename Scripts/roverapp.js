@@ -231,6 +231,7 @@
     var startPage = function () {
         var startingLocation = "00";
         var startingOrientation = "N";
+        var startingOrientation = "E";
         controller.placeRoverInLocation(startingLocation, startingOrientation);
         view.displayObstructions(model.getGridObstructionLocations());
         stopFormSubmission();
