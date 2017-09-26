@@ -66,6 +66,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\Space-Invaders-East.png" />
+    <Content Include="Content\Images\Space-Invaders-North.png" />
+    <Content Include="Content\Images\Space-Invaders-South.png" />
+    <Content Include="Content\Images\Space-Invaders-West.png" />
     <Content Include="Content\Images\Space-invaders.jpg" />
     <Content Include="Content\Images\Space-Invaders.png" />
     <Content Include="packages.config" />
