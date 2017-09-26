@@ -17,7 +17,6 @@
         };
         var showRoverInLocation = function (location, orientation) {
             eraseRoverOnScreen();
-            //$("#" + location).addClass(orientationStyleMap[orientation]);
             addClassToLocation(orientationDataMap[orientation]["style"], location);
         };
         var displayMessage = function (message) {
@@ -66,20 +65,6 @@
                         }
                     }, 1000 * i);
                 }(i));
-            }
-        };
-        var moveRoverWithInstructions_old = function (roverInstructions) {
-            var currentInstruction = "";
-            for (var i = 0; i < roverInstructions.length; i++) {
-                currentInstruction = roverInstructions[i];
-                if (model.roverCanMove(currentInstruction)) {
-                    model.moveRoverByInstruction(currentInstruction);
-                    view.showRoverInLocation(model.getCurrentLocation(), model.getCurrentOrientation());
-                    view.displayLocationMessage(model.getCurrentOrientation());
-                } else {
-                    view.displayMessage("Rover cannot move past obstruction.")
-                    break;
-                }
             }
         };
         var placeRoverInLocation = function (location, orientation) {
