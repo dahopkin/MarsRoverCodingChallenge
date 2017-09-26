@@ -194,11 +194,11 @@
     };
     var processRoverInput = function (roverInputText) {
         var roverInstructions = parseRoverInstructions(roverInputText);
-            if (roverInstructions) {
-                controller.moveRoverWithInstructions(roverInstructions);
-            } else {
-                view.displayMessage("Instructions are invalid. Please use only 'l', 'r', 'b', or 'f'")
-            }
+        if (roverInstructions) {
+            controller.moveRoverWithInstructions(roverInstructions);
+        } else {
+            view.displayMessage("Instructions are invalid. Please use only 'l', 'r', 'b', or 'f' in uppercase or lowercase.")
+        }
 
     };
     var stopFormSubmission = function () {
